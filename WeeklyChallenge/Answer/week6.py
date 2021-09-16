@@ -25,8 +25,7 @@ def solution(weights, head2head):
             search_idx = opponent_idx + 1
         boxer_info_dict[i].append(win_count_overweight)
 
-    answer = [num[0]+1 for num in sorted(boxer_info_dict.items(), key=lambda x:(x[1][WIN_COUNT], x[1][WIN_COUNT_OW], x[1][WEIGHT], -x[0]))]
-    answer.reverse()
+    answer = [num[0]+1 for num in sorted(boxer_info_dict.items(), key=lambda x:(x[1][WIN_COUNT], x[1][WIN_COUNT_OW], x[1][WEIGHT], -x[0]), reverse=True)]
 
     return answer
 
