@@ -79,3 +79,34 @@ class ListIteration:
     #
     #     # num_list 길이가 반복문 수행중 변하더라도, 반복문은 0부터 4번째 index 까지 순서대로 가기로 되어있다. (제어자는 고정)
     #     # 따라서, num_list = [1, 2, 3, 5]가 된 후 index 4는 존재하지 않으므로 IndexError 가 발생하게 되므로 조심
+
+
+# BOOKMARK <#3> : [LIST] append, insert, extend, +(연산자)를 이용하여 추가하기
+class ListInsertion:
+    def __init__(self):
+        self.my_list = [1, 2, 3]
+
+    def refresh_list(self):
+        self.my_list = [1, 2, 3]
+
+    def li_append(self, value):
+        self.refresh_list()
+        self.my_list.append(value)  # 맨 마지막 index (-1) 에 value 가 들어감
+        return self.my_list
+
+    def li_insert(self, index, value):
+        self.refresh_list()
+        self.my_list.insert(index, value)  # 해당 index 에 value 가 들어감
+        return self.my_list
+
+    def li_extend(self):
+        self.refresh_list()
+        new_list = [4, 5]
+        self.my_list.extend(new_list)  # my_list 에 new_list 가 이어 붙여짐
+        return self.my_list
+
+    def li_plus(self):
+        self.refresh_list()
+        new_list = [6, 7]
+        self.my_list += new_list
+        return self.my_list
