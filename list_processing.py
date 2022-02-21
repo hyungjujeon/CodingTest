@@ -152,3 +152,27 @@ class ListDeletion:
     def ld_slicing(self, start, end, step):
         self.refresh_list()
         self.my_list = self.my_list[start: end: step]  # 순수 slicing 은 list 에 영향 주지 않으므로 재정의 해야 함
+
+
+# BOOKMARK <#5> : [LIST] slicing 이용하기 > list[start: end: step]
+class ListSlicing:
+    def __init__(self):
+        # 양수 index  :   0  1  2  3  4  5  6  7  8  9
+        self.num_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        # 음수 index  :  -10 -9 -8 -7 -6 -5 -4 -3 -2 -1
+
+    def ls_slicing_positive(self):
+        result1 = self.num_list[:4]  # 처음부터 index 4 전까지(3) : [1, 2, 3, 4]
+        result2 = self.num_list[3:]  # index 3 부터 마지막까지 : [4, 5, 6, 7, 8, 9, 10]
+        result3 = self.num_list[::2]  # 처음을 시작으로 하나씩 건너 뛰면서 : [1, 3, 5, 7, 9]
+
+    def ls_slicing_negative(self):
+        result1 = self.num_list[-4:]  # index -4(7) 부터 마지막 까지 : [7, 8, 9, 10]
+        result2 = self.num_list[:-4]  # 처음부터 index -4(7) 전(6)까지 : [1, 2, 3, 4, 5, 6]
+
+    def ls_slicing_reverse(self):
+        # index 상 역순으로 slicing 하기 위해서는, step 이용 하지 않으면 빈 배열인 [] 임
+        # ex) num_list[-2:-4]
+        # ex) num_list[4:2]
+        result1 = self.num_list[::-3]  # 맨 마지막부터 역순으로 3개씩 건너 뛰면서 : [10, 7, 4, 1]
+        result2 = self.num_list[2:-2:2]  # index 2 부터, index -2(9) 전(8)까지 2칸씩 : [3, 5, 7]
