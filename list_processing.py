@@ -110,3 +110,45 @@ class ListInsertion:
         new_list = [6, 7]
         self.my_list += new_list
         return self.my_list
+
+
+# BOOKMARK <#4> : [LIST] pop, remove, del, slicing 을 이용하여 제거하기
+class ListDeletion:
+    # slicing 만 원래 list 에 영향을 받지 않고, 나머지 pop, remove, del 은 원래 list 에 영향을 줌(값 삭제)
+    def __init__(self):
+        self.my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    def refresh_list(self):
+        self.my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    def ld_pop(self, index=None):
+        self.refresh_list()
+        if any(index):
+            value = self.my_list.pop(index)  # list 에서 해당 index 값을 빼고 return 함
+        else:
+            value = self.my_list.pop()  # 맨 마지막 값(-1)을 list 에서 빼고 return 함
+
+        return self.my_list
+
+    def ld_remove(self, value):
+        self.refresh_list()
+        self.my_list.remove(value)  # list 에서 해당 value 에 해당되는 값을 빼고 return 은 하지 않음
+        # 만약 여러개면, 0번에서 가까운 요소가 삭제된다.
+
+        return self.my_list
+
+    def ld_del_idx(self, index):
+        self.refresh_list()
+        del self.my_list[index]  # list 에서 해당 index 값을 빼고 return 은 하지 않음
+
+        return self.my_list
+
+    def ld_del_slicing(self, start, end, step):
+        self.refresh_list()
+        del self.my_list[start: end: step]  # start 부터 end-1 index 전 까지 step 만큼에 해당되는 값을 빼고 return 은 하지 않음
+
+        return self.my_list
+
+    def ld_slicing(self, start, end, step):
+        self.refresh_list()
+        self.my_list = self.my_list[start: end: step]  # 순수 slicing 은 list 에 영향 주지 않으므로 재정의 해야 함
