@@ -176,3 +176,45 @@ class ListSlicing:
         # ex) num_list[4:2]
         result1 = self.num_list[::-3]  # 맨 마지막부터 역순으로 3개씩 건너 뛰면서 : [10, 7, 4, 1]
         result2 = self.num_list[2:-2:2]  # index 2 부터, index -2(9) 전(8)까지 2칸씩 : [3, 5, 7]
+
+
+# BOOKMARK <#6> : [LIST] 배열 내 탐색 - 특정 값 index 찾기
+class ListSearching:
+    def __init__(self):
+        self.num_list = [1, 2, 3, 1, 5, 3, 7, 8, 10]
+
+    def ls_function_index(self, value):
+        # list 내에 찾으려는 값의 index를 return 하며, 해당 값이 없으면 오류인 ValueError 발생
+        try:
+            value_idx = self.num_list.index(value)
+            return value_idx
+        except Exception as e:
+            print(f'error : {e}, list 내 value 에 해당되는 값이 존재하지 않음')
+
+    def ls_function_find(self, value, start, end):
+        # AttributeError: 'list' object has no attribute 'find' -> list는 find를 지원하지 않기 때문에,
+        # list 를 str 로 변형 시킨 후에 이용해야 하며.
+        num_list_to_str = ''.join(map(str, self.num_list))
+        value_idx = num_list_to_str.find(str(value), start, end)
+
+        # 찾으려는 value 또한 int 형이 아닌, str 형으로 받아줘야 한다.(혹시 int로 받더라도 str로 다시 그냥 변형시키기)
+        # start, end 는 생략 가능하며 (start) ~ (end-1) 까지 value 값이 있는지 확인한다.
+
+        return value_idx
+
+    def ls_function_count(self, value, start, end):
+        # list 내에 value 에 해당되는 값이 몇개인지 return
+        # count 도 범위 내에 하고 싶다면, list 자체에 slicing 을 적용하자.
+        num_count = self.num_list[start:end].count(value)
+        return num_count
+
+    def ls_search_indices(self, value):
+        # count 함수는 갯수만 return 하기 때문에, 각각 index 를 return 하도록 함
+        value_indices = [i for i, j in enumerate(self.num_list) if j == value]
+
+        # 찾고 난 후, len 함수를 이용하면 개수도 동시에 구할 수 있음
+        num_count = len(value_indices)
+
+        print(f'{value}는 리스트 안에 {num_count}개, {value_indices}에 있다.')
+
+        return value_indices
