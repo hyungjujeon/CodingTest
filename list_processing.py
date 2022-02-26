@@ -245,3 +245,25 @@ class ListRemoveDuplicates:
                 new_num_list.append(num)
 
         return new_num_list
+
+
+# BOOKMARK <#8> : [LIST] 정렬
+class ListSoring:
+    def __init__(self):
+        self.num_list = [1, 10, 1, 10, 1, 10, 2, 3, 5, 7, 8, 2, 8]
+
+    def refresh_list(self):
+        self.num_list = [1, 10, 1, 10, 1, 10, 2, 3, 5, 7, 8, 2, 8]
+
+    def ls_reverse(self):
+        # 배열 순서를 역순으로, return 값은 없지만 list 값들이 바뀐다.
+        self.refresh_list()
+        return self.num_list.reverse()
+
+    def ls_sorting(self, is_ascending=True):
+        # 오름 차순으로 정렬, reverse=True를 전달하면 내림차순으로 정렬 / return 값은 없지만 list 값들이 바뀐다.
+        self.refresh_list()
+        if is_ascending:
+            return self.num_list.sort()
+        else:
+            return self.num_list.sort(reverse=True)
