@@ -312,3 +312,131 @@ class StringProcessing:
         # 문자열로 변환할 때, 각 요소를 붙일 째 추가할 문자를 '' 안에 넣고 사용하면 됨/생략 시 그냥 붙힘 : '{문자 or 문자열}'.join(리스트)
         join_by_dot = '.'.join(split_by_dot)  # 결과 : 'h.z/o.o'
         join_by_slash = '/'.join(split_by_slash)  # 결과 : 'h.z/o.o'
+
+
+# BOOKMARK <#10> : [LIST] mutable 한 속성을 고려한 list 복사하기 -> shallow copy / deep copy
+class ListCopy:
+    def __init__(self):
+        self.original_list = [1, 2, 3]
+        self.original_list2 = [1, 2, [3, 4]]
+
+    def refresh_list(self):
+        self.original_list = [1, 2, 3]
+        self.original_list2 = [1, [2, 3]]
+
+    def assign_variable(self):
+        # list 는 mutable 한 속성을 가지기 때문에, 대입 연산을 통한 할당은 값의 할당이 아닌 메모리의 할당임
+        # mutable 한 객체 : list, set, dict / immutable 한 객체 : 나머지
+        # ref) https://wikidocs.net/16038
+        self.refresh_list()
+        new_list = self.original_list
+        new_list[0] = 10
+
+        # 메모리 할당이기 때문에, 값도 같이 변하며 id 값도 같음을 확인할 수 있다.
+        print(f'원본 : {self.original_list} | 할당 : {new_list}')
+        print(f'원본 ID : {id(self.original_list)} | 할당 : {id(new_list)}')
+
+    def shallow_copy(self):
+        # 이름과 같이 얕은 복사이며, mutable 한 객체 안에 mutable 한 객체가 또 들어있을 때 안에 있는 객체의 메모리는 똑같이 할당됨
+
+        self.refresh_list()
+        new_list2 = self.original_list2[:]  # 1번째 방법 : slicing
+        # 2번째 방법 : copy 모듈의 copy 함수 사용
+        # import copy
+        # new_list = copy.copy(self.original_list2)
+
+        print('*' * 60)
+        print('<1> 얕은 복사 직후')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[0]} | 복사본 : {new_list2[0]}')
+        print(f'원본 ID : {id(self.original_list2[0])} | 복사본 ID : {id(new_list2[0])}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        print('-' * 60)
+
+        new_list2.append(5)
+        print('*' * 60)
+        print('<2> 얕은 복사 후 복사된 리스트에 값 추가 했을 때')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        #
+        print('-' * 60)
+
+        new_list2[0] = 0
+        print('*' * 60)
+        print('<3> 얕은 복사 후 immutable 한 객체에 할당했을 때(int)')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[0]} | 복사본 : {new_list2[0]}')
+        print(f'원본 ID : {id(self.original_list2[0])} | 복사본 ID : {id(new_list2[0])}')
+        # <1> 에서 같았던 주소가, 변경된다.(original_list2[0] 과 new_list2[0]
+        print('-' * 60)
+
+        new_list2[1].append(4)
+        print('*' * 60)
+        print('<4> 얕은 복사 후 mutable 한 객체에 값을 추가했을 때')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        # 1번 index 에 있는 객체는 list 로 mutable 하기 때문에, 값 및 주소가 바뀜
+        print('-' * 60)
+
+        new_list2[1] = 6
+        print('*' * 60)
+        print('<5> 얕은 복사 후 mutable 한 객체 자체에 재할당 시')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        # mutable 한 객체(list)가 immutable 한 객체(int) 자체로 변환 되었기 때문에 값 및 주소가 달라짐
+        print('-' * 60)
+
+    def deep_copy(self):
+        self.refresh_list()
+        import copy
+        new_list2 = copy.deepcopy(self.original_list2)
+
+        print('*' * 60)
+        print('<1> 깊은 복사 직후')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[0]} | 복사본 : {new_list2[0]}')
+        print(f'원본 ID : {id(self.original_list2[0])} | 복사본 ID : {id(new_list2[0])}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        # immutable 한 객체는 주소는 같게 copy 되며 -> 어차피 재할당 시 주소가 바뀜, mutable 한 객체(list[1])는 주소를 다르게 copy 함
+        print('-' * 60)
+
+        new_list2[0] = 0
+        print('*' * 60)
+        print('<2> 깊은 복사 직후 immutable 한 객체 재할당')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print(f'원본 : {self.original_list2[0]} | 복사본 : {new_list2[0]}')
+        print(f'원본 ID : {id(self.original_list2[0])} | 복사본 ID : {id(new_list2[0])}')
+        print('-' * 60)
+
+        print('*' * 60)
+        print('<3> 깊은 복사 직후 mutable 한 객체에 값 추가')
+        print(f'원본 : {self.original_list2} | 복사본 : {new_list2}')
+        print(f'원본 ID : {id(self.original_list2)} | 복사본 ID : {id(new_list2)}')
+        print('-' * 60)
+        print('값 추가 전')
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        print('-' * 60)
+        new_list2[1].append(4)
+        print('값 추가 후')
+        print(f'원본 : {self.original_list2[1]} | 복사본 : {new_list2[1]}')
+        print(f'원본 ID : {id(self.original_list2[1])} | 복사본 ID : {id(new_list2[1])}')
+        print('-' * 60)
