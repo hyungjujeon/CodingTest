@@ -218,3 +218,30 @@ class ListSearching:
         print(f'{value}는 리스트 안에 {num_count}개, {value_indices}에 있다.')
 
         return value_indices
+
+
+# BOOKMARK <#7> : [LIST] 중복 제거
+class ListRemoveDuplicates:
+    def __init__(self):
+        self.num_list = [1, 10, 1, 10, 1, 10, 2, 3, 5, 7, 8, 2, 8]
+
+    def lrd_ascending(self):
+        # 중복 제거 후 오름차순으로 정렬 됨
+        # new_num_list => [1, 2, 3, 5, 7, 8, 10]
+        new_num_list = list(set(self.num_list))
+        return new_num_list
+
+    def lrd_original(self):
+        # 중복 제거를 하더라도 순서는 그대로 함
+        # new_num_list => [1, 10, 2, 3, 5, 7, 8]
+        new_num_list = list(dict.fromkeys(self.num_list))
+        return new_num_list
+
+    def lrd_original2(self):
+        # 위 함수와 결과값은 같지만, 반복문을 사용
+        new_num_list = []
+        for num in self.num_list:
+            if num not in new_num_list:
+                new_num_list.append(num)
+
+        return new_num_list
