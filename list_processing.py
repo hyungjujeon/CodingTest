@@ -338,7 +338,6 @@ class ListCopy:
 
     def shallow_copy(self):
         # 이름과 같이 얕은 복사이며, mutable 한 객체 안에 mutable 한 객체가 또 들어있을 때 안에 있는 객체의 메모리는 똑같이 할당됨
-
         self.refresh_list()
         new_list2 = self.original_list2[:]  # 1번째 방법 : slicing
         # 2번째 방법 : copy 모듈의 copy 함수 사용
@@ -399,6 +398,7 @@ class ListCopy:
         print('-' * 60)
 
     def deep_copy(self):
+        # 얕은 복사와 다르게, mutable 한 객체 안에 mutable 한 객체(list 내 list)가 또 들어 있더라도 완전 새거 처럼 할당
         self.refresh_list()
         import copy
         new_list2 = copy.deepcopy(self.original_list2)
