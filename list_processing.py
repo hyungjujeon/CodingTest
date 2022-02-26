@@ -278,3 +278,37 @@ class ListSoring:
             my_list.sort(key=lambda x: x * 3, reverse=True)
 
         return my_list
+
+
+# BOOKMARK <#9> : [STRING] 문자열 처리 관련
+class StringProcessing:
+    def sp_using_format(self):
+        # {:[1][2][3]}.format('문자열') 형식이며, [1]은 채워넣을 문자(생략시 공백) / [2]는 정렬 방향 / [3]은 총 문자열 길이
+        # [2] 정렬방향 : <는 왼쪽, >는 오른쪽, ^는 가운데
+        print('{:?<10}'.format('hzoo'))  # 먼저 왼쪽으로 정렬 후, 나머지 칸은 '?' 로 채움
+        print('{:?>10}'.format('hzoo'))  # 먼저 오른쪽으로 정렬 후, 나머지 칸은 '?' 로 채움
+        print('{:?^10}'.format('hzoo'))  # 먼저 가운데로 정렬 후, 나머지 칸은 '?' 로 채움
+
+        print('{:?<10}{:!>10}'.format('hzoo', 'oozh'))  # 양쪽으로 각 문자열 밀어넣은 후, 나머지 가운데는 ?와 !로 채워넣음
+
+    def sp_string_functions(self):
+        # 각종 문자열 관련 함수 - 대/소문자 변환, 치환, 공백 제거, 문자열 나누기, 문자열로 합치기
+        name = '{:?^10}'.format('Hzoo')
+
+        upper_name = name.upper()  # 모두 대문자로 변환, 원래 list 인 name 은 변하지 않음
+        lower_name = name.upper().lower()  # 모두 소문자로 변환
+
+        new_name = name.replace('?', ' ')  # 문자열 치환 : replace(from, to)
+
+        name_remove_both_blank = new_name.strip()
+        name_remove_left_blank = new_name.lstrip()
+        name_remove_right_blank = new_name.rstrip()
+
+        # 특정 문자 or 문자열을 구분자로 이용하여 list 로 바꿈
+        name2 = 'h.z/o.o'
+        split_by_dot = name2.split('.')  # 결과 : ['h', 'z/o', 'o']
+        split_by_slash = name2.split('/')  # 결과 : ['h.z', 'o.o']
+
+        # 문자열로 변환할 때, 각 요소를 붙일 째 추가할 문자를 '' 안에 넣고 사용하면 됨/생략 시 그냥 붙힘 : '{문자 or 문자열}'.join(리스트)
+        join_by_dot = '.'.join(split_by_dot)  # 결과 : 'h.z/o.o'
+        join_by_slash = '/'.join(split_by_slash)  # 결과 : 'h.z/o.o'
