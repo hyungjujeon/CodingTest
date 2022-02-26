@@ -267,3 +267,14 @@ class ListSoring:
             return self.num_list.sort()
         else:
             return self.num_list.sort(reverse=True)
+
+    def ls_lambda(self, is_ascending=True):
+        # 사전 순으로 오름차순, 내림차순 정렬
+        my_list = ['ab', 'a', 'abc']
+        if is_ascending:
+            # 가장 긴 길이가 'abc' 인 3이기 때문에, x * 3 으로 설정해뒀음.
+            my_list.sort(key=lambda x: x * 3)
+        else:
+            my_list.sort(key=lambda x: x * 3, reverse=True)
+
+        return my_list
